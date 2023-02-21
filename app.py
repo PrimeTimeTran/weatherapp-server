@@ -1,12 +1,9 @@
-from flask import Flask, request, jsonify
+from flask import Flask, jsonify
 from datetime import date
 import requests
 
 from os import environ
 APIKEY = environ.get('APIKEY')
-
-print('Loi', APIKEY)
-
 
 app = Flask(__name__)
 
