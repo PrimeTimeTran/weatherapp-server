@@ -1,17 +1,10 @@
-from flask import Flask, jsonify
-from datetime import date
 import requests
-
 from os import environ
+from flask import Flask, jsonify
+
 APIKEY = environ.get('APIKEY')
 
 app = Flask(__name__)
-
-
-def getDate():
-    today = date.today()
-    return "{}-{}-{}".format(today.year, today.month, today.day)
-
 
 cities = [
     "Reno,NV",
@@ -24,14 +17,14 @@ def getForecasts():
     data = []
     for c in cities:
         r = requests.get(
-            "https://api.weatherapi.com/v1/forecast.json?key={}&q={}&days=14".format(APIKEY, c))
+            "https://api.weatherapi.com/v1/forecast.json?days=14&q={}&key={}".format(c, APIKEY))
         r = r.json()
         data.append(r)
     return data
 
 
 @app.route("/")
-def hello_world():
+def home():
     return jsonify(getForecasts())
 
 
